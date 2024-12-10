@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image reveal animation</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div style="height: 90vh;"></div>
+  <div class="container">'
+    <div class="flex">
+      <div class="whalf">
+        <div class="imgbox">
+          <div class="imgbox__shuuter"></div>
+          <div class="imgbox__shuuter2"></div>
+          <div class="imgbox__opacity"></div>
+          <img src="https://claros.tech/wp-content/uploads/2024/12/Div-features-image-wrapper.png" alt=""
+            class="imgbox__img">
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div style="height: 90vh;"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script>
+    const timeline = gsap.timeline({ paused: true });
+    timeline.to(".imgbox__shuuter2", {
+      height: 0,
+      duration: 1,
+      ease: "power2.out",
+    })
+      .to(".imgbox__shuuter", {
+        height: 0,
+        duration: 1,
+        ease: "power2.out",
+      }, "1")
+      .to(
+        ".imgbox__img",
+        {
+          opacity: 1,
+          top: 0,
+          scale: 1,
+          duration: 1,
+          ease: "power2.out",
+        },
+        "-=.9"
+      )
+      .to(
+        ".imgbox__opacity",
+        {
+          opacity: 0,
+          duration: 1,
+          ease: "power2.out",
+        },
+        "-=0.6"
+      );
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            timeline.play();
+          }
+        });
+      },
+      {
+        root: null,
+        threshold: 0.5,
+      }
+    );
+    const imgbox = document.querySelector(".imgbox");
+    observer.observe(imgbox);
+  </script>
+</body>
+
+</html>
